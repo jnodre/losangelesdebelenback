@@ -16,7 +16,35 @@ const userSchema = mongoose.Schema({
     name : String,
     hobbies: [
         {
-            type: String
+            type: String,
+            enum: [
+                "Fútbol",
+                "Tenis",
+                "Videojuegos",
+                "PlayStation 4",
+                "PlayStation 5",
+                "Viajar",
+                "Caminar",
+                "Fitness",
+                "Among US",
+                "Informática",
+                "Progrmación",
+                "Boxeo",
+                "Kick Boxing",
+                "Xbox",
+                "Gaming",
+                "Perros",
+                "Gatos",
+                "Caballos",
+                "Hamsters",
+                "Coches",
+                "Motos",
+                "Pintura",
+                "Geografía",
+                "Matemáticas",
+                "Negocios",
+                "StartUps"
+            ]
         }
     ],
     location: {

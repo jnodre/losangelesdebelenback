@@ -42,7 +42,20 @@ app.get('/', function (req, res) {
 const usersRouter = require('./api/users/users.router')
 app.use('/users', usersRouter)
 
-app.listen(5000, (err) => {
+app.post('/register', async function (req, res) {
+    let body = req.body;
+    let { username, email, password } = body;
+    const newUser = await UserModel.create({
+      username,
+      email,
+      password: bcrypt.hashSync(password, 10)
+    });
+    delete newUser.password;
+    return res.json(newUser);
+  });
+
+
+app.listen(3000, (err) => {
     if (err) return console.log('ERROR: ', err);
-    console.log('Servidor corriendo en el 5000');
+    console.log('Servidor corriendo en el 3000');
 })
