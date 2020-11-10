@@ -13,6 +13,17 @@ mongoose.connect('mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@clus
 
 app.use(express.json())
 
+app.post('/register', async function (req, res) {
+    let body = req.body;
+    let { username, email, password } = body;
+    const newUser = await UserModel.create({
+      username,
+      email,
+      password: bcrypt.hashSync(password, 10)
+    });
+    delete newUser.password;
+    return res.json(newUser);
+  });
 
 app.listen(5000, (err) => {
     if (err) return console.log('ERROR: ', err);
