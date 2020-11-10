@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 module.exports.getOneById = getOneById;
 
+
 function getOneById(req, res) {
     const  usernameToFind = req.params.username ;
     return userModel
