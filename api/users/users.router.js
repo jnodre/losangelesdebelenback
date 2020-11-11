@@ -3,6 +3,6 @@ const controller = require('./users.controller');
 
 router.post('/register', controller.createOne )
 router.get('/:username', controller.getOneById);
-router.put('/:username/hobbies', controller.selectHobbies);
-router.put('/:username/location', controller.selectLocation);
+router.put('/:username/hobbies', controller.selectHobbies);     //put method only for first selection
+router.put('/:username/location', controller.selectLocation);   //put method only for first selection
 module.exports = router;
