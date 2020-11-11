@@ -8,9 +8,7 @@ const app = express();
 const cors = require('cors');
 require('dotenv').config()
 
-mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`, 
-
-{ useNewUrlParser: true, useUnifiedTopology:  true });
+mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology:  true });
 
 app.use(express.json())
 
