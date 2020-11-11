@@ -24,7 +24,7 @@ app.post('/register', async function (req, res) {
     return res.json(newUser);
   });
 
-app.listen(5000, (err) => {
+app.listen(3000, (err) => {
     if (err) return console.log('ERROR: ', err);
-    console.log('Servidor corriendo en el 5000');
+    console.log('Servidor corriendo en el 3000');
 })
