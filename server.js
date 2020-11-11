@@ -7,15 +7,13 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const cors = require('cors');
 require('dotenv').config()
-<<<<<<< HEAD
-mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`, 
-{ useNewUrlParser: true, useUnifiedTopology:  true });
-=======
 
 mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology:  true });
->>>>>>> 6d985772350f019f238c9b57680e8bfa9e689b36
+
 
 app.use(express.json())
+const usersRouter = require('./api/users/users.router')
+app.use('/users', usersRouter)
 
 app.get('/', function (req, res) {
     UserModel.findOne({ username: req.body.username })
@@ -42,10 +40,7 @@ app.get('/', function (req, res) {
          return res.status(500).json( erro )
      })
   });
-
-const usersRouter = require('./api/users/users.router')
-app.use('/users', usersRouter)
-
+  
 app.post('/register', async function (req, res) {
     let body = req.body;
     let { username, email, password } = body;
@@ -58,10 +53,6 @@ app.post('/register', async function (req, res) {
     return res.json(newUser);
   });
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 6d985772350f019f238c9b57680e8bfa9e689b36
 app.listen(3000, (err) => {
     if (err) return console.log('ERROR: ', err);
     console.log('Servidor corriendo en el 3000');

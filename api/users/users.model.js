@@ -50,7 +50,29 @@ const userSchema = mongoose.Schema({
     ],
     location: {
         type: String,
-        minLength: 5
+        minLength: 5,
+        enum : [
+            "Las Palmas de Gran Canaria",
+            "Telde",
+            "Santa María de Guía",
+            "Gáldar",
+            "Arucas",
+            "Agaete",
+            "Santa Brígida",
+            "Moya",
+            "Firgas",
+            "Teror",
+            "Valleseco",
+            "Vega de San Mateo",
+            "Valsequillo",
+            "Ingenio",
+            "Agüimes",
+            "Santa Lucía de Tirajana",
+            "Mogán",
+            "La aldea de San Nicolás",
+            "Artenara",
+            "Tejeda"
+        ]
     },
     photos : [
         {
