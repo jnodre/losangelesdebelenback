@@ -7,13 +7,12 @@ module.exports.getOneById = getOneById;
 module.exports.selectHobbies = selectHobbies;
 module.exports.selectLocation = selectLocation;
 
-
 function getOneById(req, res) {
-    const  usernameToFind = req.params.username ;
-    return userModel
-        .findOne( { username : usernameToFind } )
-        .then(u => res.json(u) )
-        .catch(e => res.status(500).json(e) )
+  const { id } = req.params;
+  return userModel
+      .findOne( { _id : id} )
+      .then(u => res.json(u) )
+      .catch(e => res.status(500).json(e) )
 }
 function createAcc(req, res) {
     return userModel
@@ -23,7 +22,8 @@ function createAcc(req, res) {
   }
  
   function selectHobbies(req, res) {
-    return userModel.findOne({ username: req.params.username })
+    const { id } = req.params;
+    return userModel.findOne({ _id : id} )
       .then(async user => {
           if (user) {
             const newHobbies = req.body.hobbies; //array con hobbies
@@ -39,7 +39,8 @@ function createAcc(req, res) {
   
   }
   function selectLocation(req, res) {
-    return userModel.findOne({ username: req.params.username })
+    const { id } = req.params;
+    return userModel.findOne({ _id : id})
       .then(async user => {
           if (user) {
             const newLocation = req.body.location; //array con hobbies

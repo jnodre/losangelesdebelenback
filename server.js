@@ -1,4 +1,3 @@
-
 const express = require('express');
 const mongoose = require('mongoose');
 const UserModel = require('./api/users/users.model');
@@ -6,11 +5,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
 const cors = require('cors');
+
 require('dotenv').config()
 
 mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology:  true });
 
-
+app.use(cors())
 app.use(express.json())
 const usersRouter = require('./api/users/users.router')
 app.use('/users', usersRouter)

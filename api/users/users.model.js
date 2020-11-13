@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
-    username : {
-        type : String,
-        unique : true,
-        required: true,
-        minLength : 5
-    },
+const userSchema = mongoose.Schema({    
     email : {
         type : String,
         unique: true,
@@ -18,6 +12,15 @@ const userSchema = mongoose.Schema({
         required: true,
     },
     name : String,
+    surname : String,
+    gender : {
+        type: String,
+        enum : [
+            "Femenino",
+            "Masculino",
+            "Otros"
+        ]
+    },
     hobbies: [
         {
             type: String,
