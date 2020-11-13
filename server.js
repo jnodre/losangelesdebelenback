@@ -15,8 +15,8 @@ app.use(express.json())
 const usersRouter = require('./api/users/users.router')
 app.use('/users', usersRouter)
 
-app.get('/', function (req, res) {
-    UserModel.findOne({ username: req.body.username })
+app.get('/login', function (req, res) {
+    UserModel.findOne({ email: req.body.email })
       .then( usuarioDB => {
       
         // Verifica que exista un usuario con el mail escrita por el usuario.
