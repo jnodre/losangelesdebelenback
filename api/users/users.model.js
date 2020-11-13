@@ -13,7 +13,10 @@ const userSchema = mongoose.Schema({
         unique: true,
         validate : (email) => emailValid(email)
     },
-    password : String,
+    password : {
+        type: String,
+        required: true,
+    },
     name : String,
     hobbies: [
         {
