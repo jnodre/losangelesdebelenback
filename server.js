@@ -5,10 +5,25 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
 const cors = require('cors');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const MONGO_URL = `mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`
+
+app.use(session({
+  secret: 'SECRET WORD',
+  resave: true,
+  saveUninitialized: true, 
+  store: new MongoStore(
+    {
+      url: MONGO_URL,
+      autoReconnect: true
+    }
+  )
+}))
 
 require('dotenv').config()
 
-mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology:  true });
+mongoose.connect(MONGO_URL, { useNewUrlParser: true, useUnifiedTopology:  true });
 
 app.use(cors())
 app.use(express.json())
