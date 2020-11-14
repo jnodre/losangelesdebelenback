@@ -45,7 +45,6 @@ function selectHobbies(req, res) {
                 return res.status(400).send("That user doesnt exists ");
             }
         }).catch(e => res.status(500).json(e))
-
 }
 
 function selectLocation(req, res) {
@@ -78,19 +77,7 @@ function editHobbies(req, res) {
         })
         .then(async user => {
             if (user) {
-                const hobbies = ["", "", ""];
-                const newHobbies = req.body.hobbies;
-                const oldHobbies = user.hobbies;
-                for (let i = 0; i < 3; i++) {
-                    if (newHobbies[i] != oldHobbies[i]) {
-                        hobbies[i] = newHobbies;
-                    } else if (newHobbies[i] == "") {
-                        hobbies[i] = oldHobbies[i];
-                    } else {
-                        hobbies[i] = oldHobbies[i];
-                    }
-                }
-                user.hobbies = hobbies;
+                user.hobbies = req.body.hobbies;
                 return user.save()
                     .then(userEdited => {
                         return res.json(userEdited);
