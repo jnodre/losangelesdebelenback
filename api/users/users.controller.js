@@ -6,6 +6,7 @@ module.exports.createOne = createAcc;
 module.exports.getOneById = getOneById;
 module.exports.selectHobbies = selectHobbies;
 module.exports.selectLocation = selectLocation;
+module.exports.editHobbies = editHobbies;
 
 function getOneById(req, res) {
   const { id } = req.params;
