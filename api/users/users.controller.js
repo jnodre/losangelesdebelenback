@@ -55,3 +55,7 @@ function createAcc(req, res) {
       }) .catch(e => res.status(500).json(e) )
 
   }
+
+  function editHobbies(req, res){
+    
+  }
