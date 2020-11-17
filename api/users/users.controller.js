@@ -8,9 +8,13 @@ module.exports.selectLocation = selectLocation;
 module.exports.editHobbies = editHobbies;
 module.exports.getAllUsers = getAllUsers;
 module.exports.giveMatch = giveMatch;
+module.exports.getFriends = getFriends;
+
 
 function getOneById(req, res) {
-  const {id} = req.params;
+  const {
+    id
+  } = req.params;
   return userModel
     .findOne({
       _id: id
@@ -91,9 +95,11 @@ function editHobbies(req, res) {
 }
 
 function getAllUsers(req, res) {
-  const {id} = req.params;
+  const {
+    id
+  } = req.params;
   return userModel.find({}).then(response => {
-    res.json(response.filter(response => response.id!=id));
+    res.json(response.filter(response => response.id != id));
   })
 }
 
@@ -106,9 +112,9 @@ function giveMatch(req, res) {
     })
     .then(u => {
       if (u.matches.includes(id)) {
-          u.matches = u.matches.filter(idSearch => idSearch != id);
-          u.friends.push(id);
-          u.save()
+        u.matches = u.matches.filter(idSearch => idSearch != id);
+        u.friends.push(id);
+        u.save()
           .then(arrow => {
             userModel
               .findOne({
@@ -120,13 +126,13 @@ function giveMatch(req, res) {
                 me.save()
                   .then(e => res.status(200).json(e))
                   .catch(e => res.status(500).json(e))
-                  res.json(me);
+                res.json(me);
               })
               .catch(e => res.status(500).json(e))
           })
           .catch(e => res.status(500).json(e))
       } else {
-       userModel
+        userModel
           .findOne({
             _id: id
           })
@@ -135,11 +141,21 @@ function giveMatch(req, res) {
             mi.save()
               .then(e => res.status(200).json(e))
               .catch(e => res.status(500).json(e))
-              res.json(mi);
+            res.json(mi);
           })
           .catch(e => res.status(500).json(e))
       }
     })
     .catch(e => res.status(500).json(e))
+}
 
+async function getFriends(req, res) {
+  const {id} = req.params;
+  return userModel.findOne({
+      _id: id
+    })
+    .populate('friends')
+    .then(user => {
+        res.json(user.friends);
+      });
 }
