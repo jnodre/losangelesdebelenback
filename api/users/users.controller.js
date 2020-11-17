@@ -5,6 +5,7 @@ module.exports.createOne = createAcc;
 module.exports.getOneById = getOneById;
 module.exports.selectHobbies = selectHobbies;
 module.exports.selectLocation = selectLocation;
+module.exports.selectGender = selectGender;
 module.exports.editHobbies = editHobbies;
 module.exports.editName = editName;
 module.exports.editMail = editMail;
@@ -62,6 +63,27 @@ function selectLocation(req, res) {
             if (user) {
                 const newLocation = req.body.location; //array con hobbies
                 user.location = newLocation;
+                return user.save()
+                    .then(userEdited => {
+                        return res.json(userEdited);
+                    })
+            } else {
+                return res.status(400).send("That user doesnt exists ");
+            }
+        }).catch(e => res.status(500).json(e))
+}
+
+function selectGender(req, res) {
+    const {
+        id
+    } = req.params;
+    return userModel.findOne({
+            _id: id
+        })
+        .then(async user => {
+            if (user) {
+                const newGender = req.body.gender; //array con hobbies
+                user.gender = newGender;
                 return user.save()
                     .then(userEdited => {
                         return res.json(userEdited);
