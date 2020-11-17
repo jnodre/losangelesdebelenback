@@ -85,6 +85,12 @@ const userSchema = mongoose.Schema({
             type: String
         }
     ],
+    matches : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'user'
+        }
+    ],
     friends : [
         {
             type : mongoose.Schema.Types.ObjectId,
