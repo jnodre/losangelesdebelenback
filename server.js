@@ -91,9 +91,10 @@ app.listen(3000, (err) => {
 //Groups ------------
 
 app.post('/creategroup', async function (req, res) {
-  let name = req.body;
+  let body = req.body;
+  let { group } = body; //Preguntar a Belén
   const newGroup = await groupsModel.create({
-    name
+    group
   });
   return res.json(newGroup);
 });
