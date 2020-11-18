@@ -10,7 +10,6 @@ module.exports.getAllUsers = getAllUsers;
 module.exports.giveMatch = giveMatch;
 module.exports.getFriends = getFriends;
 
-
 function getOneById(req, res) {
   const {
     id
@@ -159,3 +158,4 @@ async function getFriends(req, res) {
         res.json(user.friends);
       });
 }
+
