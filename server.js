@@ -2,7 +2,6 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const UserModel = require('./api/users/users.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
@@ -18,15 +17,19 @@ mongoose.connect(`mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@clus
 app.use(cors())
 app.use(express.json())
 
+//Router
 const usersRouter = require('./api/users/users.router')
-const groupsRouter = require('./api/groups/groups.model');
+const groupsRouter = require('./api/groups/groups.router');
+
+//Model
+const UserModel = require('./api/users/users.model');
 const groupsModel = require('./api/groups/groups.model');
 
-app.use('/users', usersRouter)
-app.use('/groups', groupsRouter)
+//App.use
+app.use('/users', usersRouter);
+app.use('/groups', groupsRouter);
 
 //-------------------------
-
 //Users  ---------------
 
 app.post('/login', function (req, res) {
