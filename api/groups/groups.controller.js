@@ -1,4 +1,4 @@
-const groupsModel = require('./groups.model');
+const groupsModel = require("./groups.model");
 
 module.exports.createGroup = createGroup;
 
