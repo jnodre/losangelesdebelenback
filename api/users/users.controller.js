@@ -11,6 +11,7 @@ module.exports.editName = editName;
 module.exports.editMail = editMail;
 module.exports.editGender = editGender;
 module.exports.editLocation = editLocation;
+module.exports.editPassword = editPassword;
 
 function getOneById(req, res) {
     const {
@@ -184,6 +185,25 @@ function editLocation(req, res) {
         .then(async user => {
             if (user) {
                 user.location = req.body.location;
+                return user.save()
+                    .then(userEdited => {
+                        return res.json(userEdited);
+                    })
+            } else {
+                return res.status(400).send("That user doesnt exists ");
+            }
+        }).catch(e => res.status(500).json(e))
+}
+function editPassword(req, res) {
+    const {
+        id
+    } = req.params;
+    return userModel.findOne({
+            _id: id
+        })
+        .then(async user => {
+            if (user) {
+                user.password = req.body.password;
                 return user.save()
                     .then(userEdited => {
                         return res.json(userEdited);

@@ -11,4 +11,5 @@ router.patch('/:id/name', controller.editName);     //patch method only to modif
 router.patch('/:id/email', controller.editMail);     //patch method only to modify my email
 router.patch('/:id/gender', controller.editGender);     //patch method only to modify my gender
 router.patch('/:id/location', controller.editLocation);     //patch method only to modify my location
+router.patch('/:id/password', controller.editPassword);     //patch method only to modify my location
 module.exports = router;
