@@ -203,7 +203,7 @@ function editPassword(req, res) {
         })
         .then(async user => {
             if (user) {
-                user.password = req.body.password;
+                user.password = bcrypt.hashSync(req.body.password, 10);
                 return user.save()
                     .then(userEdited => {
                         return res.json(userEdited);
