@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const Schema = mongoose.Schema;
+const saltRounds = 10;
 
-const userSchema = mongoose.Schema({    
+const userSchema = new Schema({    
     email : {
         type : String,
         unique: true,
-        required: true,        
+        required: true,
+        lowercase: true,
+        trim: true,
         validate : (email) => emailValid(email)
     },
     password : {
@@ -100,6 +105,35 @@ const userSchema = mongoose.Schema({
 })
 function emailValid(email){
     return /^\S+@\S+.\S+$/.test(email) 
+}
+
+userSchema.pre('save', function(next){
+    const usuario = this;
+    if(!usuario.isModified('password')){
+        return next();
+    }
+    
+    bcrypt.genSalt(saltRounds,(err,salt)=>{
+        if(err){
+           return next(err);
+        }
+        bcrypt.hash(usuario.password, salt, (err,hash)=> {
+            if(err){
+                next(err);
+            }
+            usuario.password = hash;
+            next();
+        })
+    })
+})
+
+userSchema.methods.compararPassword = function (password,callback){
+    bcrypt.compare(password, this.password, (err, sonIguales) =>{
+        if(err){
+            return callback(err);
+        } 
+        return callback(null, sonIguales)
+    })
 }
 
 const userModel = mongoose.model('user', userSchema)

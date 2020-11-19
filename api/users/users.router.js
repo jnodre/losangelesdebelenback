@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const controller = require('./users.controller');
 
-router.post('/register', controller.createOne )
+router.post('/register', controller.postSingup);
 router.get('/:id', controller.getOneById);
 router.get('/:id/people', controller.getAllUsers);
 router.get('/:id/friends', controller.getFriends);

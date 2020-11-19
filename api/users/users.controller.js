@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const userModel = require("./users.model");
+const userSchema = require("./users.model");
+const passport = require("passport")
 
-module.exports.createOne = createAcc;
 module.exports.getOneById = getOneById;
 module.exports.selectHobbies = selectHobbies;
 module.exports.selectLocation = selectLocation;
@@ -9,7 +10,54 @@ module.exports.editHobbies = editHobbies;
 module.exports.getAllUsers = getAllUsers;
 module.exports.giveMatch = giveMatch;
 module.exports.getFriends = getFriends;
+module.exports.postSingup = postSingup;
+module.exports.postLogin = postLogin;
+module.exports.logout = logout;
 
+function postSingup  (req, res, next) {
+  const nuevoUsuario = new userSchema({
+      email: req.body.email,
+      nombre: req.body.nombre,
+      password: req.body.password
+  });
+
+
+  userModel.findOne({email: req.body.email}, (err, usuarioExiste)=>{
+      if(usuarioExiste){
+        return res.status(400).send('El email ya está registrado');
+      }
+      nuevoUsuario.save().then( () =>
+        req.login(nuevoUsuario, (err) => {
+          if(err){
+            next(err);
+          }
+          res.send('Usuario creado correctamente');
+        })
+  ).catch(err=> console.log(err))
+})
+}
+
+function postLogin (req, res, next) {
+  passport.authenticate('local', (err, usuario, info) => {
+    if (err) {
+      next(err);
+    }
+    if (!usuario) {
+      return res.status(400).send('Email o contraseña no válidos');
+    }
+    req.login(usuario, (err) => {
+      if (err) {
+        next(err);
+      }
+      res.send('Login exitoso');
+    })
+  })(req, res, next);
+}
+
+function logout (req,res) {
+  req.logout();
+  res.send('Logout exitoso')
+}
 
 function getOneById(req, res) {
   const {
@@ -19,13 +67,6 @@ function getOneById(req, res) {
     .findOne({
       _id: id
     })
-    .then(u => res.json(u))
-    .catch(e => res.status(500).json(e))
-}
-
-function createAcc(req, res) {
-  return userModel
-    .create(req.body)
     .then(u => res.json(u))
     .catch(e => res.status(500).json(e))
 }
