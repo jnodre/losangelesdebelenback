@@ -6,10 +6,10 @@ const groupsSchema = mongoose.Schema({
         unique: true,
         required: true
     },
-    members : {
+    members : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'user'
-    }
+    }]
 })
 
 const groupsModel = mongoose.model('groups', groupsSchema)

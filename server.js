@@ -92,9 +92,19 @@ app.listen(3000, (err) => {
 
 app.post('/creategroup', async function (req, res) {
   let body = req.body;
-  let { group } = body; //Preguntar a Belén
+  let { group } = body; 
   const newGroup = await groupsModel.create({
     group
   });
   return res.json(newGroup);
 });
+
+
+app.get('/groups/:id', async function (req, res) {
+  let body = req.params;
+  let { id } = body; 
+  const newGroup = await groupsModel.findOne({
+    _id : id
+  });
+  return res.json(newGroup);
+}); 
