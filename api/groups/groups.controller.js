@@ -3,6 +3,7 @@ const groupsModel = require("./groups.model");
 module.exports.createGroup = createGroup;
 module.exports.getGroup = getGroup;
 module.exports.addMember = addMember;
+module.exports.getAllMembers = getAllMembers;
 
 function createGroup(req, res) {
   return groupsModel.create(req.body)
@@ -44,4 +45,17 @@ function addMember(req, res) {
          res.status(400).send("That group doesnt exists ");
       }
     }).catch(e => res.status(500).json(e))
+}
+
+function getAllMembers(req , res){
+  const {
+    id
+  } = req.params;
+  return groupsModel.findOne({
+    _id : id
+  })
+  .populate('members')
+  .then(group => {
+    res.json(group.members);
+  })
 }
