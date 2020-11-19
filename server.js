@@ -98,13 +98,3 @@ app.post('/creategroup', async function (req, res) {
   });
   return res.json(newGroup);
 });
-
-/*
-app.get('/groups/:id', async function (req, res) {
-  let body = req.params;
-  let { id } = body; 
-  const newGroup = await groupsModel.findOne({
-    _id : id
-  });
-  return res.json(newGroup);
-}); */
