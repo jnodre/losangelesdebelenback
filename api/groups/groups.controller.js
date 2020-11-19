@@ -8,14 +8,14 @@ function createGroup(req, res) {
     .then(u => res.json(u))
     .catch(e => res.status(500).json(e))
 }
-
+ /*
 function getGroup(req,res){
   return groupsModel.findOne(req.body)
   .then(u => res.json(u))
   .catch(e => res.status(500).json(e))
 } 
-
-/* function getGroup(req, res) {
+*/
+ function getGroup(req, res) {
   const { id } = req.params;
   return groupsModel
     .findOne({
@@ -23,4 +23,4 @@ function getGroup(req,res){
     })
     .then(u => res.json(u))
     .catch(e => res.status(500).json(e))
-}  */
+}  

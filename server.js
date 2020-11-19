@@ -99,7 +99,7 @@ app.post('/creategroup', async function (req, res) {
   return res.json(newGroup);
 });
 
-
+/*
 app.get('/groups/:id', async function (req, res) {
   let body = req.params;
   let { id } = body; 
@@ -107,4 +107,4 @@ app.get('/groups/:id', async function (req, res) {
     _id : id
   });
   return res.json(newGroup);
-}); 
+}); */
