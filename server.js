@@ -98,3 +98,25 @@ app.post('/creategroup', async function (req, res) {
   });
   return res.json(newGroup);
 });
+
+app.get('/home/:id', async function (req, res) {
+  const {
+    id
+  } = req.params;
+   UserModel
+    .findOne({
+      _id: id
+    })
+    .then( u => {
+      var hobbies = u.hobbies;
+      const people={};
+      for (const nameHobbie in hobbies){
+        return groupsModel.findOne({
+          group : hobbies[0]
+        }).populate('members')
+        .then(group => {
+          res.json(group.members);
+        }).catch(e => res.status(500).json(e))        
+      }            
+    }).catch(e => res.status(500).json(e))
+});

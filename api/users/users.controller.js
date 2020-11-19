@@ -42,6 +42,8 @@ function selectHobbies(req, res) {
         user.hobbies = newHobbies;
         return user.save()
           .then(userEdited => {
+            //HAY QUE GUARDAR LOS HOBBIES DEL USUARIO EN SU GRUPO CORRESPONDIENTE
+            //HACER AQUÍ, SI NO, EL ARRAY MEMBERS DEL GRUPO QUEDARÁ VACÍO
             return res.json(userEdited);
           })
       } else {
