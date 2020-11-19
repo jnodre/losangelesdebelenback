@@ -9,9 +9,9 @@ const controladorUsuario = require('./api/users/users.controller');
 const cors = require('cors');
 const usersRouter = require('./api/users/users.router')
 const app = express();
-const MONGO_URL = "mongodb+srv://admin:admin@cluster0.juarj.mongodb.net/prueba?retryWrites=true&w=majority"
+require('dotenv').config()
+const MONGO_URL = `mongodb+srv://admin:${process.env.DB_PASS}@cluster0.juarj.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
-// require('dotenv').config()
 mongoose.Promise = global.Promise;
 mongoose.connect(MONGO_URL);
 mongoose.connection.on('error', (err)=>{
