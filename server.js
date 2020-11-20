@@ -7,7 +7,8 @@ const passport = require('passport');
 const passportConfig = require('./config/passport')
 const controladorUsuario = require('./api/users/users.controller');
 const cors = require('cors');
-const usersRouter = require('./api/users/users.router')
+const usersRouter = require('./api/users/users.router');
+const { Cookie } = require('express-session');
 const app = express();
 require('dotenv').config()
 const MONGO_URL = `mongodb+srv://admin:${process.env.DB_PASS}@cluster0.juarj.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
@@ -24,6 +25,10 @@ app.use(session({
   secret: 'SECRET',
   resave: true,
   saveUninitialized: true,
+  cookie: {
+    secure: false,
+    httpOnly: false
+  },
   store : new MongoStore({
       url: MONGO_URL,
       autoReconnet: true
@@ -37,6 +42,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(cors())
+Response.Headers.AddCookies(new Cookie[]{
+  new Cookie("WorkingCookie", cookieValue) { Path="/" }, 
+  new Cookie("NotWorkingCookie", cookieValue) 
+})
 app.use(express.json())
 app.use('/users', usersRouter)
 
