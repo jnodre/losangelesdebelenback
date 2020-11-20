@@ -93,12 +93,33 @@ function editHobbies(req, res) {
       _id: id
     })
     .then(async user => {
-      if (user) {
+      user.hobbies.forEach(element =>{
+        groupsModel.findOne({
+          group : element
+        }).then(g=> {
+          g.members = g.members.filter(user => user._id != id);
+          g.save();
+        }).catch(e => res.status(500).json(e))
+      })
+      if (user) { 
         user.hobbies = req.body.hobbies;
         return user.save()
           .then(userEdited => {
-            return res.json(userEdited);
-          })
+            userEdited.hobbies.forEach(element => {
+              groupsModel.findOne({
+                group : element
+              })
+              .then(g => {
+                if(!g.members.includes(id)){
+                  g.members.push(id);
+                  g.save();
+                  return res.json(g);
+                }else{
+                  res.status(500).json("The user exist inside group");
+                }
+              })
+            }).catch(e => res.status(500).json(e))
+          }).catch(e => res.status(500).json(e))
       } else {
         return res.status(400).send("That user doesnt exists ");
       }
