@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const userModel = require("./users.model");
 const userSchema = require("./users.model");
 const passport = require("passport")
+const isLogged = false;
 
 module.exports.getOneById = getOneById;
 module.exports.selectHobbies = selectHobbies;
@@ -49,7 +50,10 @@ function postLogin (req, res, next) {
       if (err) {
         next(err);
       }
+      isLogged = true;
       res.send('Login exitoso');
+      res.send(isLogged);
+      return res.redirect('/' + usuario._id)
     })
   })(req, res, next);
 }
