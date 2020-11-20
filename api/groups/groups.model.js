@@ -8,8 +8,7 @@ const groupsSchema = mongoose.Schema({
     },
     members : [{
         type : mongoose.Schema.Types.ObjectId,
-        ref : 'user',
-        unique: true
+        ref : 'user'
     }]
 })
 
