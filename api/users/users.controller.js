@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt');
 const userModel = require("./users.model");
 const userSchema = require("./users.model");
 const passport = require("passport")
-const isLogged = false;
 
 module.exports.getOneById = getOneById;
 module.exports.selectHobbies = selectHobbies;
