@@ -1,14 +1,22 @@
 const groupsModel = require("./groups.model");
+const userModel = require("../users/users.model");
 
 module.exports.createGroup = createGroup;
 module.exports.getGroup = getGroup;
 module.exports.addMember = addMember;
-module.exports.getAllMembers = getAllMembers;
+module.exports.getAllGroups = getAllGroups;
+//module.exports.getAllMembers = getAllMembers;
 
-function createGroup(req, res) {
+function createGroup(req, res) { //No sobra este?
   return groupsModel.create(req.body)
     .then(u => res.json(u))
     .catch(e => res.status(500).json(e))
+}
+
+function getAllGroups(req, res){
+  return groupsModel.find({}).then(response => {
+    res.json(response);
+  }).catch(e => res.status(500).json(e));
 }
 
 function getGroup(req, res) {
@@ -19,6 +27,7 @@ function getGroup(req, res) {
     .findOne({
       _id: id
     })
+    .populate('members') //He añadido esto para que popule y al buscar el grupo, muestre también sus miembros
     .then(u => res.json(u))
     .catch(e => res.status(500).json(e))
 }
@@ -47,6 +56,7 @@ function addMember(req, res) {
     }).catch(e => res.status(500).json(e))
 }
 
+/* ESTO HAY QUE HACERLO EN SERVER.JS PARA QUE LA RUTA NO SEA /GROUPS/LOQUESEA Y SEA /HOME/:ID
 function getAllMembers(req , res){
   const {
     id
@@ -58,4 +68,4 @@ function getAllMembers(req , res){
   .then(group => {
     res.json(group.members);
   })
-}
+}*/
