@@ -99,24 +99,24 @@ app.post('/creategroup', async function (req, res) {
   return res.json(newGroup);
 });
 
-app.get('/home/:id', async function (req, res) {
+
+app.get('/home/:id', async function (req, res){
   const {
     id
   } = req.params;
    UserModel
     .findOne({
       _id: id
-    })
-    .then( u => {
-      var hobbies = u.hobbies;
-      const people={};
-      for (const nameHobbie in hobbies){
+    }).then(user => {
+      var hobbies = user.hobbies;
+      hobbies.forEach(element => {
         return groupsModel.findOne({
-          group : hobbies[0]
+          group : element
         }).populate('members')
-        .then(group => {
-          res.json(group.members);
-        }).catch(e => res.status(500).json(e))        
-      }            
-    }).catch(e => res.status(500).json(e))
+        .then(g =>{
+          res.json(g);
+        })
+        .catch(e => res.status(500).json(e))
+      });  
+    }).catch(e => res.status(500).json(e))  
 });

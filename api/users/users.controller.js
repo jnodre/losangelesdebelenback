@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt');
+const groupsModel = require('../groups/groups.model');
 const userModel = require("./users.model");
 
 module.exports.createOne = createAcc;
@@ -42,10 +43,19 @@ function selectHobbies(req, res) {
         user.hobbies = newHobbies;
         return user.save()
           .then(userEdited => {
-            //HAY QUE GUARDAR LOS HOBBIES DEL USUARIO EN SU GRUPO CORRESPONDIENTE
-            //HACER AQUÍ, SI NO, EL ARRAY MEMBERS DEL GRUPO QUEDARÁ VACÍO
-            return res.json(userEdited);
-          })
+            userEdited.hobbies.forEach(element => {
+              groupsModel.findOne({
+                group : element
+              })
+              .then(g =>{
+                g.members.push(id);
+                g.save();
+                res.json(g);
+              })
+              .catch(e => res.status(500).json(e))           
+            });
+            res.json(userEdited);
+          }).catch(e => res.status(500).json(e))
       } else {
         return res.status(400).send("That user doesnt exists ");
       }
