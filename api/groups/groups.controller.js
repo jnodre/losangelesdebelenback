@@ -4,12 +4,19 @@ const userModel = require("../users/users.model");
 module.exports.createGroup = createGroup;
 module.exports.getGroup = getGroup;
 module.exports.addMember = addMember;
+module.exports.getAllGroups = getAllGroups;
 //module.exports.getAllMembers = getAllMembers;
 
 function createGroup(req, res) { //No sobra este?
   return groupsModel.create(req.body)
     .then(u => res.json(u))
     .catch(e => res.status(500).json(e))
+}
+
+function getAllGroups(req, res){
+  return groupsModel.find({}).then(response => {
+    res.json(response);
+  }).catch(e => res.status(500).json(e));
 }
 
 function getGroup(req, res) {
