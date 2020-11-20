@@ -50,9 +50,8 @@ function postLogin (req, res, next) {
       if (err) {
         next(err);
       }
-      isLogged = true;
       res.send('Login exitoso');
-      res.send(isLogged);
+      res.send(usuario._id);
       return res.redirect('/' + usuario._id)
     })
   })(req, res, next);
