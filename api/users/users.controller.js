@@ -11,6 +11,7 @@ module.exports.getAllUsers = getAllUsers;
 module.exports.giveMatch = giveMatch;
 module.exports.getFriends = getFriends;
 module.exports.getUsers = getUsers;
+module.exports.editPassword = editPassword;
 
 function getUsers(req, res) {
   return userModel.find({}).then(response => {
@@ -199,3 +200,23 @@ async function getFriends(req, res) {
       });
 }
 
+
+function editPassword(req, res) {
+  const {
+      id
+  } = req.params;
+  return userModel.findOne({
+          _id: id
+      })
+      .then(async user => {
+          if (user) {
+              user.password = bcrypt.hashSync(req.body.password, 10);
+              return user.save()
+                  .then(userEdited => {
+                      return res.json(userEdited);
+                  })
+          } else {
+              return res.status(400).send("That user doesnt exists ");
+          }
+      }).catch(e => res.status(500).json(e))
+}
