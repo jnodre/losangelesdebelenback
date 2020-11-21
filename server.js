@@ -110,7 +110,6 @@ app.get('/home/:id', function (req, res) {
     .findOne({
       _id: id
     }).then(user => {
-
       Object.keys(user.hobbies).forEach(element => {
         groupsModel.findOne({
             group: user.hobbies[element]
@@ -118,7 +117,7 @@ app.get('/home/:id', function (req, res) {
           .then(g => {
             let clone = _.cloneDeep(g.members)
             for (let i = 0; i < clone.length; i++) { 
-              if (clone[i]._id != id) {
+              if (clone[i].id != id) {
                 continue;
               } else {
                 clone.splice([i] , 1);
