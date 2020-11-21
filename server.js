@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const app = express();
 const cors = require('cors');
+const _ = require('lodash');
 
 require('dotenv').config()
 
@@ -104,7 +105,7 @@ app.get('/home/:id', function (req, res) {
   const {
     id
   } = req.params;
-const arr = [];
+
   UserModel
     .findOne({
       _id: id
@@ -115,15 +116,20 @@ const arr = [];
             group: user.hobbies[element]
           }).populate('members')
           .then(g => {
-            //g.members = g.members.filter(member => member._id != id);
-            arr.push(g.members.filter(member => member._id != id)); // <-- Esto funciona
-            console.log(arr); // <-- Esta es la prueba
-             res.json(arr); // <-- Esto no funciona por algún motivo
-             return res.json(arr);
+            let clone = _.cloneDeep(g.members)
+            for (let i = 0; i < clone.length; i++) { 
+              if (clone[i]._id != id) {
+                continue;
+              } else {
+                clone.splice([i] , 1);
+                i--;
+              }
+              res.json(clone);
+            }
           }).catch(e => res.status(500).json(e));
-          
+
       }).catch(e => res.status(500).json(e));
-     
+
     });
 });
 
@@ -132,3 +138,4 @@ app.listen(3000, (err) => {
   if (err) return console.log('ERROR: ', err);
   console.log('Servidor corriendo en el 3000');
 })
+
