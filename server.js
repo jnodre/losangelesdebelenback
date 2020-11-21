@@ -112,23 +112,15 @@ app.get("/home/:id", function (req, res) {
           })
           .populate("members")
           .then((g) => {
-            let clone = _.cloneDeep(g.members);
-            for (let i = 0; i < clone.length; i++) {
-              if (clone[i]._id != id) {
-                continue;
-              } else {
-                clone.splice([i], 1);
-                i--;
-              }
-            }
-            return clone;
+            const others = g.members.filter (u => u._id != id); 
+            return others
           })
           .catch((e) => res.status(500).json(e))
       );
     });
     Promise.all(arr).then(users => {
-      console.log(users);
-      res.json([...users])
+      const newArray = [...new Set(users)];
+      res.json(newArray)
     });
   });
 });
