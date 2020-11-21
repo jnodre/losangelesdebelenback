@@ -10,6 +10,13 @@ module.exports.editHobbies = editHobbies;
 module.exports.getAllUsers = getAllUsers;
 module.exports.giveMatch = giveMatch;
 module.exports.getFriends = getFriends;
+module.exports.getUsers = getUsers;
+
+function getUsers(req, res) {
+  return userModel.find({}).then(response => {
+    res.json(response)
+  }).catch(e => res.status(500).json(e));
+}
 
 function getOneById(req, res) {
   const {

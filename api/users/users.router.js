@@ -9,4 +9,5 @@ router.patch('/:id/people', controller.giveMatch);
 router.put('/:id/hobbies', controller.selectHobbies);     //put method only for first selection
 router.put('/:id/location', controller.selectLocation);   //put method only for first selection
 router.patch('/:id/hobbies', controller.editHobbies);     //patch method only for modify hobbies
+router.get('/' , controller.getUsers);
 module.exports = router;

@@ -89,35 +89,45 @@ app.post('/register', async function (req, res) {
 
 app.post('/creategroup', async function (req, res) {
   let body = req.body;
-  let { group } = body; 
-  const newGroup = await groupsModel.create({
+  let {
     group
-  }).then (res.json("Group created"))
-  .catch(res.status(500).json("Problem creating group"));
-  return res.status(200).json(newGroup);  
+  } = body;
+  const newGroup = await groupsModel.create({
+      group
+    }).then(res.json("Group created"))
+    .catch(res.status(500).json("Problem creating group"));
+  return res.status(200).json(newGroup);
 });
 
 
-app.get('/home/:id', async function (req, res){
+app.get('/home/:id', function (req, res) {
   const {
     id
   } = req.params;
-   UserModel
+const arr = [];
+  UserModel
     .findOne({
       _id: id
     }).then(user => {
-      Object.keys(user.hobbies).forEach(element =>
-      {
-        return groupsModel.findOne({
-          group : user.hobbies[element]
-        }).populate('members')
-        .then(g =>{          
-          g.members = g.members.filter(member => member._id != id);
-          res.json(g.members);
-        }).catch(e => res.status(500).json(e))
-      });  
-    }).catch(e => res.status(500).json(e))  
+
+      Object.keys(user.hobbies).forEach(element => {
+        groupsModel.findOne({
+            group: user.hobbies[element]
+          }).populate('members')
+          .then(g => {
+            //g.members = g.members.filter(member => member._id != id);
+            arr.push(g.members.filter(member => member._id != id)); // <-- Esto funciona
+            console.log(arr); // <-- Esta es la prueba
+             res.json(arr); // <-- Esto no funciona por algún motivo
+             return res.json(arr);
+          }).catch(e => res.status(500).json(e));
+          
+      }).catch(e => res.status(500).json(e));
+     
+    });
 });
+
+
 app.listen(3000, (err) => {
   if (err) return console.log('ERROR: ', err);
   console.log('Servidor corriendo en el 3000');
