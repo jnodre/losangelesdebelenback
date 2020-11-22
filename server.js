@@ -120,7 +120,8 @@ app.get("/home/:id", function (req, res) {
     });
     Promise.all(arr).then(users => {
       const newArray = [...new Set(users)];
-      res.json(newArray)
+      var merged = [].concat.apply([], newArray);
+      res.json(merged)
     });
   });
 });

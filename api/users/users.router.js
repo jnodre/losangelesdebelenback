@@ -11,5 +11,5 @@ router.put("/:id/location", controller.selectLocation); //put method only for fi
 router.patch("/:id/hobbies", controller.editHobbies); //patch method only for modify hobbies
 router.patch("/:id/password", controller.editPassword); //patch method only to modify my location
 
-router.get("/", controller.getUsers);
+//router.get("/", controller.getUsers);
 module.exports = router;
