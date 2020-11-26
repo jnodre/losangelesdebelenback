@@ -14,6 +14,7 @@ module.exports.postSingup = postSingup;
 module.exports.postLogin = postLogin;
 module.exports.logout = logout;
 
+
 function postSingup  (req, res, next) {
   const nuevoUsuario = new userSchema({
       email: req.body.email,
@@ -49,11 +50,17 @@ function postLogin (req, res, next) {
       if (err) {
         next(err);
       }
-      res.send('Login exitoso');
-      res.send(usuario._id);
-      return res.redirect('/' + usuario._id)
+      res.send(usuario);
+      // res.send('Login exitoso');
     })
   })(req, res, next);
+}
+
+function estaAutenticado (req, res) {
+  if(req.isAuthenticated()){
+    return res.json(req.user);
+  }
+  return res.status(401).send('Tienes que hacer login para acceder a este recurso')
 }
 
 function logout (req,res) {
