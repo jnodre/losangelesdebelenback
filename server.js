@@ -19,8 +19,7 @@ mongoose.connect(
 );
 
 app.use(cors({
-  origin: true,
-  Methods : post,
+  origin: true
 }));
 app.use(express.json());
 
