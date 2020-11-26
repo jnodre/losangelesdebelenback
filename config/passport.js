@@ -33,7 +33,15 @@ passport.use(new LocalStrategy(
 
 exports.estaAutenticado = (req, res, next) => {
     if(req.isAuthenticated()){
-        return next()
+        return next();
     }
-    res.status(401).send('Tienes que hacer login para acceder a este recurso')
+    return res.status(401).send('Tienes que hacer login para acceder a este recurso')
+}
+
+exports.AuthSimple = (req,res, next) => {
+    if(req.isAuthenticated()){
+        return next();
+    }else{
+        return res.json({"status":"false"});
+    }
 }
