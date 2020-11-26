@@ -20,10 +20,7 @@ mongoose.connect(
 
 app.use(cors({
   origin: true,
-  Methods : [
-    get, post, put, patch
-  ]
-  
+  Methods : post,
 }));
 app.use(express.json());
 
