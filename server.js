@@ -11,16 +11,13 @@ const _ = require("lodash");
 require("dotenv").config();
 
 mongoose.connect(
-  `mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`,
-  {
+  `mongodb+srv://admin:${process.env.MONGODB_ADMIN_PASSWORD}@cluster0.by8p6.mongodb.net/onlyfriends?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }
 );
 
-app.use(cors({
-  origin: true
-}));
+app.use(cors());
 app.use(express.json());
 
 //Router
@@ -40,8 +37,8 @@ app.use("/groups", groupsRouter);
 
 app.post("/login", function (req, res) {
   UserModel.findOne({
-    email: req.body.email,
-  })
+      email: req.body.email,
+    })
     .then((usuarioDB) => {
       // Verifica que exista un usuario con el mail escrita por el usuario.
       if (!usuarioDB) {
@@ -57,8 +54,7 @@ app.post("/login", function (req, res) {
       }
 
       // Genera el token de autenticación
-      let token = jwt.sign(
-        {
+      let token = jwt.sign({
           usuario: usuarioDB,
         },
         "SECRET"
@@ -75,7 +71,11 @@ app.post("/login", function (req, res) {
 
 app.post("/register", async function (req, res) {
   let body = req.body;
-  let { username, email, password } = body;
+  let {
+    username,
+    email,
+    password
+  } = body;
   const newUser = await UserModel.create({
     username,
     email,
@@ -90,7 +90,9 @@ app.post("/register", async function (req, res) {
 
 app.post("/creategroup", async function (req, res) {
   let body = req.body;
-  let { group } = body;
+  let {
+    group
+  } = body;
   const newGroup = await groupsModel
     .create({
       group,
@@ -101,7 +103,9 @@ app.post("/creategroup", async function (req, res) {
 });
 
 app.get("/home/:id", function (req, res) {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   UserModel.findOne({
     _id: id,
   }).then((user) => {
@@ -109,15 +113,16 @@ app.get("/home/:id", function (req, res) {
     user.hobbies.forEach((element) => {
       arr.push(
         groupsModel
-          .findOne({
-            group: element,
-          })
-          .populate("members")
-          .then((g) => {
-            const others = g.members.filter (u => u._id != id); 
-            return others
-          })
-          .catch((e) => res.status(500).json(e))
+        .findOne({
+          group: element,
+        })
+        .populate("members")
+        .then((g) => {
+          const others = g.members.filter(u => u._id != id);
+          const prueba = others.filter(x =>! user.friends.includes(x.id));
+          return prueba
+        })
+        .catch((e) => res.status(500).json(e))
       );
     });
     Promise.all(arr).then(users => {
