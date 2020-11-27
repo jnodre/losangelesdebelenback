@@ -120,7 +120,9 @@ app.get("/home/:id", function (req, res) {
         .then((g) => {
           const others = g.members.filter(u => u._id != id);
           const prueba = others.filter(x =>! user.friends.includes(x.id));
-          return prueba
+          //Si cambias const others por let, funciona también y no hace falta incluir el const prueba
+          //others = others.filter(x =>! user.friends.includes(x.id));
+          return prueba;
         })
         .catch((e) => res.status(500).json(e))
       );
