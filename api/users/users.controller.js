@@ -164,7 +164,7 @@ function editHobbies(req, res) {
                 if(!g.members.includes(id)){
                   g.members.push(id);
                   g.save();
-                  res.json(g);
+                  return res.json(g);
                 }else{
                   res.status(500).json("The user exist inside group");
                 }
