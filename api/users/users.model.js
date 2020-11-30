@@ -13,11 +13,11 @@ const userSchema = mongoose.Schema({
     },
     name : {
         type: String,
-        required: true,
+        //required: true,
     },
     description : {
         type: String,
-        required: true,
+        //required: true,
         minlength: 4,
         maxlength: 140
     },
