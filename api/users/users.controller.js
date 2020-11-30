@@ -15,6 +15,10 @@ module.exports.editMail = editMail;
 module.exports.editGender = editGender;
 module.exports.editLocation = editLocation;
 module.exports.editPassword = editPassword;
+module.exports.editFacebook = editFacebook;
+module.exports.editInstagram = editInstagram;
+module.exports.editWhatssap = editWhatssap;
+module.exports.editDescription = editDescription;
 
 function getOneById(req, res) {
   const {
@@ -331,6 +335,86 @@ function editPassword(req, res) {
     .then(async user => {
       if (user) {
         user.password = bcrypt.hashSync(req.body.password, 10);
+        return user.save()
+          .then(userEdited => {
+            return res.json(userEdited);
+          })
+      } else {
+        return res.status(400).send("That user doesnt exists ");
+      }
+    }).catch(e => res.status(500).json(e))
+}
+
+function editFacebook(req, res) {
+  const {
+    id
+  } = req.params;
+  return userModel.findOne({
+      _id: id
+    })
+    .then(async user => {
+      if (user) {
+        user.Facebook = req.body.Facebook;
+        return user.save()
+          .then(userEdited => {
+            return res.json(userEdited);
+          })
+      } else {
+        return res.status(400).send("That user doesnt exists ");
+      }
+    }).catch(e => res.status(500).json(e))
+}
+
+function editInstagram(req, res) {
+  const {
+    id
+  } = req.params;
+  return userModel.findOne({
+      _id: id
+    })
+    .then(async user => {
+      if (user) {
+        user.Instragram = req.body.Instragram;
+        return user.save()
+          .then(userEdited => {
+            return res.json(userEdited);
+          })
+      } else {
+        return res.status(400).send("That user doesnt exists ");
+      }
+    }).catch(e => res.status(500).json(e))
+}
+
+function editWhatssap(req, res) {
+  const {
+    id
+  } = req.params;
+  return userModel.findOne({
+      _id: id
+    })
+    .then(async user => {
+      if (user) {
+        user.Whatssap = req.body.Whatssap;
+        return user.save()
+          .then(userEdited => {
+            return res.json(userEdited);
+          })
+      } else {
+        return res.status(400).send("That user doesnt exists ");
+      }
+    }).catch(e => res.status(500).json(e))
+}
+
+function editDescription(req, res) {
+  const {
+    id
+  } = req.params;
+  return userModel.findOne({
+      _id: id
+    })
+    .then(async user => {
+      if (user) {
+        user.description = req.body.description;
         return user.save()
           .then(userEdited => {
             return res.json(userEdited);

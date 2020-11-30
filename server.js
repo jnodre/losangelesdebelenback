@@ -29,6 +29,7 @@ const groupsRouter = require("./api/groups/groups.router");
 //Model
 const UserModel = require("./api/users/users.model");
 const groupsModel = require("./api/groups/groups.model");
+const { findIndex, indexOf } = require("lodash");
 
 //App.use
 app.use("/users", usersRouter);
@@ -74,12 +75,12 @@ app.post("/login", function (req, res) {
 app.post("/register", async function (req, res) {
   let body = req.body;
   let {
-    username,
+    name,
     email,
     password
   } = body;
   const newUser = await UserModel.create({
-    username,
+    name,
     email,
     password: bcrypt.hashSync(password, 10),
   });
@@ -131,7 +132,7 @@ app.get("/home/:id", function (req, res) {
     });
     Promise.all(arr).then(users => {
       const newArray = [...new Set(users)];
-      var merged = [].concat.apply([], newArray);
+      var merged = [].concat.apply([], newArray);  
       res.json(merged)
     });
   });
