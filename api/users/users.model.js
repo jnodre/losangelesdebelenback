@@ -11,7 +11,25 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    name : String,
+    name : {
+        type: String,
+        required: true,
+    },
+    description : {
+        type: String,
+        required: true,
+        minlength: 4,
+        maxlength: 140
+    },
+    Facebook : {
+        type: String,
+    },
+    Instagram : {
+        type: String,
+    },
+    Whatssap : {
+        type: Number,
+    },
     surname : String,
     gender : {
         type: String,
