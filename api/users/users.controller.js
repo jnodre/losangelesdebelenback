@@ -166,7 +166,7 @@ function editHobbies(req, res) {
                   g.save();
                   return res.json(g);
                 }else{
-                  res.status(500).json("The user exist inside group");
+                  return res.status(500).json("The user exist inside group");
                 }
               })
             }).catch(e => res.status(500).json(e))
