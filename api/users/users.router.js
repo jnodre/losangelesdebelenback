@@ -10,6 +10,10 @@ router.put("/:id/hobbies", controller.selectHobbies); //put method only for firs
 router.put("/:id/location", controller.selectLocation); //put method only for first selection
 router.patch("/:id/hobbies", controller.editHobbies); //patch method only for modify hobbies
 router.patch("/:id/password", controller.editPassword); //patch method only to modify my location
+router.patch("/:id/Facebook", controller.editFacebook); //patch method only to modify my Facebook
+router.patch("/:id/Instagram", controller.editInstagram); //patch method only to modify my Instagram
+router.patch("/:id/Whatssap", controller.editWhatssap); //patch method only to modify my WHatssap
+router.patch("/:id/description", controller.editDescription); //patch method only to modify my WHatssap
 
 //router.get("/", controller.getUsers);
 module.exports = router;
