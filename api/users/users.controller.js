@@ -19,6 +19,7 @@ module.exports.editFacebook = editFacebook;
 module.exports.editInstagram = editInstagram;
 module.exports.editWhatsapp = editWhatsapp;
 module.exports.editDescription = editDescription;
+module.exports.editName = editName;
 
 function getOneById(req, res) {
   const {
@@ -415,6 +416,26 @@ function editDescription(req, res) {
     .then(async user => {
       if (user) {
         user.description = req.body.description;
+        return user.save()
+          .then(userEdited => {
+            return res.json(userEdited);
+          })
+      } else {
+        return res.status(400).send("That user doesnt exists ");
+      }
+    }).catch(e => res.status(500).json(e))
+}
+
+function editName(req, res) {
+  const {
+    id
+  } = req.params;
+  return userModel.findOne({
+      _id: id
+    })
+    .then(async user => {
+      if (user) {
+        user.name = req.body.name;
         return user.save()
           .then(userEdited => {
             return res.json(userEdited);

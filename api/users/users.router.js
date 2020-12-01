@@ -13,7 +13,8 @@ router.patch("/:id/password", controller.editPassword); //patch method only to m
 router.patch("/:id/facebook", controller.editFacebook); //patch method only to modify my Facebook
 router.patch("/:id/instagram", controller.editInstagram); //patch method only to modify my Instagram
 router.patch("/:id/whatsapp", controller.editWhatsapp); //patch method only to modify my WHatssap
-router.patch("/:id/description", controller.editDescription); //patch method only to modify my WHatssap
+router.patch("/:id/description", controller.editDescription); //patch method only to modify my Description
+router.patch("/:id/name", controller.editName); //patch method only to modify my Name
 
 //router.get("/", controller.getUsers);
 module.exports = router;
