@@ -131,9 +131,17 @@ app.get("/home/:id", function (req, res) {
       );
     });
     Promise.all(arr).then(users => {
+      //Convertimos el array de arrays que devuelve la función anterior en un array de objetos
       const newArray = [...new Set(users)];
-      var merged = [].concat.apply([], newArray);  
-      res.json(merged)
+      var merged = [].concat.apply([], newArray);
+      //Eliminamos los duplicados
+      var seen = new Set();
+      var filteredArr = merged.filter(el => {
+        var duplicate = seen.has(el.id);
+        seen.add(el.id);
+        return !duplicate;
+      });
+      res.json(filteredArr)
     });
   });
 });
