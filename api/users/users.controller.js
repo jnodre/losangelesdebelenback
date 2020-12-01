@@ -140,7 +140,7 @@ function editHobbies(req, res) {
   const {
     id
   } = req.params;
-   userModel.findOne({
+  return userModel.findOne({
       _id: id
     })
     .then(user => {      
@@ -172,7 +172,7 @@ function editHobbies(req, res) {
             }).catch(e => res.status(500).json(e))
           }).catch(e => res.status(500).json(e))
       } else {
-         res.status(400).send("That user doesnt exists ");
+        return res.status(400).send("That user doesnt exists ");
       }
     }).catch(e => res.status(500).json(e))
 }
