@@ -17,7 +17,7 @@ module.exports.editLocation = editLocation;
 module.exports.editPassword = editPassword;
 module.exports.editFacebook = editFacebook;
 module.exports.editInstagram = editInstagram;
-module.exports.editWhatssap = editWhatssap;
+module.exports.editWhatsapp = editWhatsapp;
 module.exports.editDescription = editDescription;
 
 function getOneById(req, res) {
@@ -385,7 +385,7 @@ function editInstagram(req, res) {
     }).catch(e => res.status(500).json(e))
 }
 
-function editWhatssap(req, res) {
+function editWhatsapp(req, res) {
   const {
     id
   } = req.params;
