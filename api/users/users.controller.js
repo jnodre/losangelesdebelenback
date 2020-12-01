@@ -141,7 +141,7 @@ function editHobbies(req, res) {
   const {
     id
   } = req.params;
-   userModel.findOne({
+  return userModel.findOne({
       _id: id
     })
     .then(user => {      
@@ -155,7 +155,7 @@ function editHobbies(req, res) {
       })
       if (user) { 
         user.hobbies = req.body.hobbies;
-         user.save()
+        return user.save()
           .then(userEdited => {
             userEdited.hobbies.forEach(element => {
               groupsModel.findOne({
@@ -165,7 +165,7 @@ function editHobbies(req, res) {
                 if(!g.members.includes(id)){
                   g.members.push(id);
                   g.save();
-                  res.json(g);
+                  return res.json(g);
                 }else{
                   res.status(500).json("The user exist inside group");
                 }
@@ -173,7 +173,7 @@ function editHobbies(req, res) {
             }).catch(e => res.status(500).json(e))
           }).catch(e => res.status(500).json(e))
       } else {
-        res.status(400).send("That user doesnt exists ");
+        return res.status(400).send("That user doesnt exists ");
       }
     }).catch(e => res.status(500).json(e))
 }
