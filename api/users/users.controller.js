@@ -375,7 +375,7 @@ function editInstagram(req, res) {
     })
     .then(async user => {
       if (user) {
-        user.Instragram = req.body.Instragram;
+        user.Instagram = req.body.Instagram;
         return user.save()
           .then(userEdited => {
             return res.json(userEdited);
